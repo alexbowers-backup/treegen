@@ -1,26 +1,17 @@
 <?php
 $list =
-    'Home
-Products
-    Product 1
-        Product 1 Images
-    Product 2
-        Product 2 Images
-            string
-            name
-                here
-            I
-        Go
-            ahkjsd
-lkj
-    f
-        d
-            f
-    Where to Buy
-About Us
-    Meet the Team
-    Careers
-Contact Us';
+    'Level 0 Child 1
+Level 0 Child 2
+    Level 1 Child 1
+        Level 1 Child 1 Grandchild 1
+    Level 1 Child 2
+        Level 1 Child 2 Grandchild 1
+            Level 1 Child 2 Grandchild 1 Great-grandchild 1
+            Level 1 Child 2 Grandchild 1 Great-grandchild 2
+            Level 1 Child 2 Grandchild 1 Great-grandchild 3
+        Level 1 Child 2 Grandchild 2
+            Level 1 Child 2 Grandchild 2 Great-grandchild 1
+';
 
 function helper($list, $indentation = '    ') {
     $result = array();
