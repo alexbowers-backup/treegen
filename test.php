@@ -65,7 +65,10 @@ function makeList(array $array, $level = 0, $very_first_item = true)
     //Recursive Step: make a list with child lists
     $count = 0;
     foreach ($array as $key => $subArray) {
-        if($count == count($array) - 1) {
+        if ($count == count($array) - 1 && $count == 0 && $very_first_item) {
+            $prefix = '';
+            $level = -1; // Set so next level up is level 0
+        } elseif ($count == count($array) - 1) {
             $prefix = str_repeat('|   ', $level) . '└── ';
         } elseif($very_first_item === true) {
             $prefix =  str_repeat('|   ', $level) . '┌── ';
