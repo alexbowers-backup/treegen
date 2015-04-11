@@ -14,8 +14,8 @@ Level 0 Child 2
 ';
 
 function helper($list, $indentation = '    ') {
-    $result = array();
-    $path = array();
+    $result = [];
+    $path = [];
 
     foreach (explode("\n", $list) as $line) {
         // get depth and label
@@ -31,17 +31,20 @@ function helper($list, $indentation = '    ') {
         }
 
         // keep label (at depth)
-        $path[$depth] = trim($line);
+        $trimmed_line = trim($line);
+        if(!empty($trimmed_line)) {
+            $path[$depth] = $trimmed_line;
 
-        // traverse path and add label to result
-        $parent =& $result;
-        foreach ($path as $depth => $key) {
-            if (!isset($parent[$key])) {
-                $parent[$key] = [];
-                break;
+            // traverse path and add label to result
+            $parent =& $result;
+            foreach ($path as $depth => $key) {
+                if (!isset($parent[$key]) && !empty($key)) {
+                    $parent[$key] = [];
+                    break;
+                }
+
+                $parent =& $parent[$key];
             }
-
-            $parent =& $parent[$key];
         }
     }
 
@@ -62,10 +65,6 @@ function makeList(array $array, $level = 0, $very_first_item = true)
     //Recursive Step: make a list with child lists
     $count = 0;
     foreach ($array as $key => $subArray) {
-//        print_r($subArray);
-//        print_r($key);
-//        echo '<br />';
-
         if($count == count($array) - 1) {
             $prefix = str_repeat('|   ', $level) . '└── ';
         } elseif($very_first_item === true) {
