@@ -14,7 +14,7 @@ class Treegen
     /**
      * @return mixed
      */
-    public function getNestedArray()
+    protected function getNestedArray()
     {
         return $this->nested_array;
     }
@@ -22,7 +22,7 @@ class Treegen
     /**
      * @param mixed $nested_array
      */
-    public function setNestedArray($nested_array)
+    protected function setNestedArray($nested_array)
     {
         $this->nested_array = $nested_array;
     }
