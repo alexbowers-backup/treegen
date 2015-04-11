@@ -81,7 +81,10 @@ Level 0 Child 2
         $output = "\n";
         $count = 0;
         foreach ($array as $key => $subArray) {
-            if ($count == count($array) - 1) {
+            if ($count == count($array) - 1 && $very_first_item) {
+                $prefix = '';
+                $level = -1;
+            } elseif ($count == count($array) - 1) {
                 $prefix = '└── ';
                 $arrLines[$level + 1] = '    ';
             } elseif ($very_first_item === true) {
