@@ -70,8 +70,8 @@ function makeList(array $array, $level = 0, $very_first_item = true)
             $level = -1; // Set so next level up is level 0
         } elseif ($count == count($array) - 1) {
             $prefix = str_repeat('|   ', $level) . '└── ';
-        } elseif($very_first_item === true) {
-            $prefix =  str_repeat('|   ', $level) . '┌── ';
+        } elseif ($very_first_item === true) {
+            $prefix = str_repeat('|   ', $level) . '┌── ';
         } else {
             $prefix = str_repeat('|   ', $level) . '├── ';
         }
