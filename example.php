@@ -18,5 +18,6 @@ Level 0 Child 2
     $treegen->setNestedString($tree);
 
     echo '<pre>';
+    echo '<meta charset="UTF-8" />';
     echo $treegen;
     echo '</pre>';
