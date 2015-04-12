@@ -229,6 +229,11 @@ class Treegen
 
     public function __toString()
     {
+        return $this->getString();
+    }
+
+    public function getString()
+    {
         if (empty($this->nested_string)) {
             $this->setNestedString('');
         }
