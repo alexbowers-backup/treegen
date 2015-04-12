@@ -13,7 +13,7 @@ class Treegen
     private $empty_node         = '';
     private $indentation        = '    ';
     private $depth;
-    
+
     /**
      * @return string
      */
@@ -232,13 +232,13 @@ class Treegen
                 $level = -1;
             } elseif ($count == count($array) - 1) {
                 $prefix = $this->mb_str_pad($this->end_node, $this->indent_width);
-                $this->depth[$level + 1] = $this->mb_str_pad($this->empty_node, $this->indent_width);;
+                $this->depth[$level + 1] = $this->mb_str_pad($this->empty_node, $this->indent_width);
             } elseif ($very_first_item === true) {
                 $prefix = $this->mb_str_pad($this->top_node, $this->indent_width);
-                $this->depth[$level + 1] = $this->mb_str_pad($this->middle_node, $this->indent_width);;
+                $this->depth[$level + 1] = $this->mb_str_pad($this->middle_node, $this->indent_width);
             } else {
                 $prefix = $this->mb_str_pad($this->middle_child_node, $this->indent_width);
-                $this->depth[$level + 1] = $this->mb_str_pad($this->middle_node, $this->indent_width);;
+                $this->depth[$level + 1] = $this->mb_str_pad($this->middle_node, $this->indent_width);
             }
             $very_first_item = false;
             for ($iCnt = 1; $iCnt <= $level; $iCnt++) {
