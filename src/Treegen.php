@@ -158,6 +158,9 @@ class Treegen
         $this->nested_string = $nested_string;
     }
 
+    /**
+     * Convert a nested tabbed string into an array
+     */
     private function stringToArray()
     {
         $result = [];
@@ -222,6 +225,17 @@ class Treegen
         $this->depth = [$max_depth];
     }
 
+    /**
+     *
+     * Converts the formed array into a formatted string in the same structure as the input string
+     * but with specific tree structures added.
+     *
+     * @param array $array
+     * @param int   $level
+     * @param bool  $very_first_item
+     *
+     * @return string
+     */
     private function format(array $array, $level = 0, $very_first_item = true)
     {
         $output = "\n";
@@ -251,11 +265,21 @@ class Treegen
         return $output;
     }
 
+    /**
+     * Magic method to convert to a string if the object gets echoed
+     *
+     * @return string
+     */
     public function __toString()
     {
         return $this->getString();
     }
 
+    /**
+     * Obtains formatted string.
+     *
+     * @return string
+     */
     public function getString()
     {
         if (empty($this->nested_string)) {
@@ -276,7 +300,7 @@ class Treegen
      * @param        $pad_style
      * @param string $encoding
      *
-     * @internal Credt goes to Mitgath: http://php.net/manual/en/ref.mbstring.php#90611
+     * @internal Credit goes to Mitgath: http://php.net/manual/en/ref.mbstring.php#90611
      *
      * @internal Has been modified to match the str_pad defaults
      *
