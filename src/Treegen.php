@@ -13,6 +13,22 @@ class Treegen
     private $empty_node         = '';
     private $indentation        = '    ';
     private $depth;
+    
+    /**
+     * @return string
+     */
+    public function getEmptyNode()
+    {
+        return $this->empty_node;
+    }
+
+    /**
+     * @param string $empty_node
+     */
+    public function setEmptyNode($empty_node)
+    {
+        $this->empty_node = $empty_node;
+    }
 
     /**
      * @return int
