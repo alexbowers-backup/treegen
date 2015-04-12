@@ -1,8 +1,6 @@
 <?php
     use Treegen\Treegen;
-error_reporting(E_ALL);
-    ini_set('display_errors', true);
-    require "src/Treegen.php";
+    require "vendor/autoload.php";
 
     $tree = "Level 0 Child 1
 Level 0 Child 2
