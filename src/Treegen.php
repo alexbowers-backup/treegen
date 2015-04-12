@@ -198,6 +198,13 @@ class Treegen
         $this->nested_array = $result;
     }
 
+    /**
+     * Get the depth of an array
+     *
+     * @internal Thanks to Jeremy Ruten: http://stackoverflow.com/a/262944/1111274
+     *
+     * @param array $array
+     */
     private function array_depth(array $array)
     {
         $max_depth = 1;
