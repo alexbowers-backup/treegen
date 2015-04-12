@@ -4,27 +4,29 @@ class Treegen
 {
     private $nested_string;
     private $nested_array;
-    private $indent_width = 4;
+    private $indent_width       = 4;
     private $single_parent_node = '';
-    private $end_node = '└──';
-    private $top_node = '┌──';
-    private $middle_child_node = '├──';
-    private $middle_node = '|';
+    private $end_node           = '└──';
+    private $top_node           = '┌──';
+    private $middle_child_node  = '├──';
+    private $middle_node        = '|';
+    private $indentation        = '    ';
+    private $depth;
 
     /**
-     * @return mixed
+     * @return int
      */
-    protected function getNestedArray()
+    public function getIndentation()
     {
-        return $this->nested_array;
+        return $this->indentation;
     }
 
     /**
-     * @param mixed $nested_array
+     * @param int $indentation
      */
-    protected function setNestedArray($nested_array)
+    public function setIndentation($indentation)
     {
-        $this->nested_array = $nested_array;
+        $this->indentation = $indentation;
     }
 
     /**
@@ -137,5 +139,104 @@ class Treegen
     public function setNestedString($nested_string)
     {
         $this->nested_string = $nested_string;
+    }
+
+    private function stringToArray()
+    {
+        $result = [];
+        $path = [];
+        $list = $this->getNestedString();
+
+        foreach (explode("\n", $list) as $line) {
+            // get depth and label
+            $depth = 0;
+            while (substr($line, 0, strlen($this->indentation)) === $this->indentation) {
+                $depth += 1;
+                $line = substr($line, strlen($this->indentation));
+            }
+
+            // truncate path if needed
+            while ($depth < sizeof($path)) {
+                array_pop($path);
+            }
+
+            // keep label (at depth)
+            $trimmed_line = trim($line);
+            if (!empty($trimmed_line)) {
+                $path[$depth] = $trimmed_line;
+
+                // traverse path and add label to result
+                $parent =& $result;
+                foreach ($path as $depth => $key) {
+                    if (!isset($parent[$key]) && !empty($key)) {
+                        $parent[$key] = [];
+                        break;
+                    }
+
+                    $parent =& $parent[$key];
+                }
+            }
+        }
+
+        $this->nested_array = $result;
+    }
+
+    private function array_depth(array $array)
+    {
+        $max_depth = 1;
+
+        foreach ($array as $value) {
+            if (is_array($value)) {
+                $depth = $this->array_depth($value) + 1;
+
+                if ($depth > $max_depth) {
+                    $max_depth = $depth;
+                }
+            }
+        }
+
+        $this->depth = [$max_depth];
+    }
+
+    private function format(array $array, $level = 0, $very_first_item = true)
+    {
+        $output = "\n";
+        $count = 0;
+        foreach ($array as $key => $subArray) {
+            if ($count == count($array) - 1 && $very_first_item) {
+                $prefix = '';
+                $level = -1;
+            } elseif ($count == count($array) - 1) {
+                $prefix = '└── ';
+                $this->depth[$level + 1] = '    ';
+            } elseif ($very_first_item === true) {
+                $prefix = '┌── ';
+                $this->depth[$level + 1] = '|   ';
+            } else {
+                $prefix = '├── ';
+                $this->depth[$level + 1] = '|   ';
+            }
+            $very_first_item = false;
+            for ($iCnt = 1; $iCnt <= $level; $iCnt++) {
+                $output .= $this->depth[$iCnt];
+            }
+            $output .= $prefix . $key . $this->format($subArray, $level + 1, $very_first_item);
+            $count++;
+        }
+
+        return $output;
+    }
+
+    public function __toString()
+    {
+        if (empty($this->nested_string)) {
+            $this->setNestedString('');
+        }
+
+        $this->stringToArray();
+
+        $this->array_depth($this->nested_array);
+
+        return $this->format($this->nested_array);
     }
 }
