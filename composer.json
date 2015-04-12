@@ -6,7 +6,8 @@
         "tree",
         "formatted",
         "tabbed",
-        "list"
+        "list",
+        "generator"
     ],
     "homepage": "https://alexbowers.github.io/treegen",
     "license": "Apache 2.0",
