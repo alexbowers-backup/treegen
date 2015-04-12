@@ -10,6 +10,7 @@ class Treegen
     private $top_node           = '┌──';
     private $middle_child_node  = '├──';
     private $middle_node        = '|';
+    private $empty_node         = '';
     private $indentation        = '    ';
     private $depth;
 
@@ -207,14 +208,14 @@ class Treegen
                 $prefix = '';
                 $level = -1;
             } elseif ($count == count($array) - 1) {
-                $prefix = '└── ';
-                $this->depth[$level + 1] = '    ';
+                $prefix = $this->mb_str_pad($this->end_node, $this->indent_width);
+                $this->depth[$level + 1] = $this->mb_str_pad($this->empty_node, $this->indent_width);;
             } elseif ($very_first_item === true) {
-                $prefix = '┌── ';
-                $this->depth[$level + 1] = '|   ';
+                $prefix = $this->mb_str_pad($this->top_node, $this->indent_width);
+                $this->depth[$level + 1] = $this->mb_str_pad($this->middle_node, $this->indent_width);;
             } else {
-                $prefix = '├── ';
-                $this->depth[$level + 1] = '|   ';
+                $prefix = $this->mb_str_pad($this->middle_child_node, $this->indent_width);
+                $this->depth[$level + 1] = $this->mb_str_pad($this->middle_node, $this->indent_width);;
             }
             $very_first_item = false;
             for ($iCnt = 1; $iCnt <= $level; $iCnt++) {
@@ -243,5 +244,23 @@ class Treegen
         $this->array_depth($this->nested_array);
 
         return $this->format($this->nested_array);
+    }
+
+    /**
+     * @param        $input
+     * @param        $pad_length
+     * @param        $pad_string
+     * @param        $pad_style
+     * @param string $encoding
+     *
+     * @internal Credt goes to Mitgath: http://php.net/manual/en/ref.mbstring.php#90611
+     *
+     * @internal Has been modified to match the str_pad defaults
+     *
+     * @return string
+     */
+    private function mb_str_pad($input, $pad_length, $pad_string = ' ', $pad_style = STR_PAD_RIGHT, $encoding = "UTF-8")
+    {
+        return str_pad($input, strlen($input) - mb_strlen($input, $encoding) + $pad_length, $pad_string, $pad_style);
     }
 }
