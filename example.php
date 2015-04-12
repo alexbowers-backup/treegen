@@ -1,6 +1,7 @@
 <?php
     use Treegen\Treegen;
-    require "vendor/autoload.php";
+
+require "vendor/autoload.php";
 
     $tree = "Level 0 Child 1
 Level 0 Child 2
