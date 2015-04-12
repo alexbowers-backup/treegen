@@ -12,25 +12,8 @@ class Treegen
     private $middle_node        = '|';
     private $empty_node         = '';
     private $indentation        = '    ';
-    private $extend_last_char   = false;
     private $depth;
-
-    /**
-     * @return boolean
-     */
-    public function isExtendLastChar()
-    {
-        return $this->extend_last_char;
-    }
-
-    /**
-     * @param boolean $extend_last_char
-     */
-    public function setExtendLastChar($extend_last_char)
-    {
-        $this->extend_last_char = $extend_last_char;
-    }
-
+    
     /**
      * @return string
      */
